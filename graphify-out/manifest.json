@@ -1,0 +1,52 @@
+{
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn1_overview.md": {
+    "mtime": 1781734695.2962298,
+    "ast_hash": "19c2ee9a150f61081dd02995fc4ede86",
+    "semantic_hash": "19c2ee9a150f61081dd02995fc4ede86"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn1_pathway_afirmasi.md": {
+    "mtime": 1781734695.2969942,
+    "ast_hash": "4ae2077923bdb650eaec4d7f88b56e8b",
+    "semantic_hash": "4ae2077923bdb650eaec4d7f88b56e8b"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn1_pathway_domisili.md": {
+    "mtime": 1781734695.2977772,
+    "ast_hash": "ca64d50d74a225b8f2ce52b05a7840ec",
+    "semantic_hash": "ca64d50d74a225b8f2ce52b05a7840ec"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn1_pathway_mutasi.md": {
+    "mtime": 1781734695.298063,
+    "ast_hash": "12604b5a32820cf414802f678157cc6a",
+    "semantic_hash": "12604b5a32820cf414802f678157cc6a"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn1_pathway_prestasi.md": {
+    "mtime": 1781734695.2986298,
+    "ast_hash": "9a47a18eba324517a28b4a42fee4b8d5",
+    "semantic_hash": "9a47a18eba324517a28b4a42fee4b8d5"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn3_overview.md": {
+    "mtime": 1781734699.3585083,
+    "ast_hash": "55688d5711a8704f5669341b0e4dc287",
+    "semantic_hash": "55688d5711a8704f5669341b0e4dc287"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn3_pathway_afirmasi.md": {
+    "mtime": 1781734699.3593023,
+    "ast_hash": "c2526110e77c91e36e597c4cfc368594",
+    "semantic_hash": "c2526110e77c91e36e597c4cfc368594"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn3_pathway_domisili.md": {
+    "mtime": 1781734699.3600082,
+    "ast_hash": "c657ce77cbb79de0c2ebe05ae262df5a",
+    "semantic_hash": "c657ce77cbb79de0c2ebe05ae262df5a"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn3_pathway_mutasi.md": {
+    "mtime": 1781734699.36027,
+    "ast_hash": "5ebec51e1dd169702d643a082c59c87c",
+    "semantic_hash": "5ebec51e1dd169702d643a082c59c87c"
+  },
+  "/Users/ydth/Documents/spmb scrape data/raw/smpn3_pathway_prestasi.md": {
+    "mtime": 1781734699.3608367,
+    "ast_hash": "49a4b0fa06c41b298f50e8eac1919d2c",
+    "semantic_hash": "49a4b0fa06c41b298f50e8eac1919d2c"
+  }
+}

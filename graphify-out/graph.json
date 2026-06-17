@@ -1,0 +1,645 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "smpn1_admission_system",
+        "label": "SMPN 1 Bogor Admission System",
+        "nodes": [
+          "raw_smpn1_overview_smp_negeri_1_bogor",
+          "raw_smpn1_overview_pathway_afirmasi",
+          "raw_smpn1_overview_pathway_domisili",
+          "raw_smpn1_overview_pathway_mutasi",
+          "raw_smpn1_overview_pathway_prestasi"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "raw/smpn1_overview.md"
+      },
+      {
+        "id": "smpn3_admission_system",
+        "label": "SMPN 3 Bogor Admission System",
+        "nodes": [
+          "raw_smpn3_overview_smp_negeri_3_bogor",
+          "raw_smpn3_overview_pathway_afirmasi",
+          "raw_smpn3_overview_pathway_domisili",
+          "raw_smpn3_overview_pathway_mutasi",
+          "raw_smpn3_overview_pathway_prestasi"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "raw/smpn3_overview.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "SMP NEGERI 1 BOGOR Overview Document",
+      "file_type": "document",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_document",
+      "community": 0,
+      "norm_label": "smp negeri 1 bogor overview document"
+    },
+    {
+      "label": "SMP NEGERI 1 BOGOR",
+      "file_type": "concept",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "community": 0,
+      "norm_label": "smp negeri 1 bogor"
+    },
+    {
+      "label": "Jalur Afirmasi (SMPN 1)",
+      "file_type": "concept",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_pathway_afirmasi",
+      "community": 0,
+      "norm_label": "jalur afirmasi (smpn 1)"
+    },
+    {
+      "label": "Jalur Domisili (SMPN 1)",
+      "file_type": "concept",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_pathway_domisili",
+      "community": 0,
+      "norm_label": "jalur domisili (smpn 1)"
+    },
+    {
+      "label": "Jalur Mutasi (SMPN 1)",
+      "file_type": "concept",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_pathway_mutasi",
+      "community": 0,
+      "norm_label": "jalur mutasi (smpn 1)"
+    },
+    {
+      "label": "Jalur Prestasi (SMPN 1)",
+      "file_type": "concept",
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_overview_pathway_prestasi",
+      "community": 2,
+      "norm_label": "jalur prestasi (smpn 1)"
+    },
+    {
+      "label": "Jalur Afirmasi Document (SMPN 1)",
+      "file_type": "document",
+      "source_file": "raw/smpn1_pathway_afirmasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74?filter=semua&jalur=afirmasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_pathway_afirmasi_document",
+      "community": 0,
+      "norm_label": "jalur afirmasi document (smpn 1)"
+    },
+    {
+      "label": "Jalur Domisili Document (SMPN 1)",
+      "file_type": "document",
+      "source_file": "raw/smpn1_pathway_domisili.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74?filter=semua&jalur=domisili&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_pathway_domisili_document",
+      "community": 0,
+      "norm_label": "jalur domisili document (smpn 1)"
+    },
+    {
+      "label": "Jalur Mutasi Document (SMPN 1)",
+      "file_type": "document",
+      "source_file": "raw/smpn1_pathway_mutasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74?filter=semua&jalur=mutasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_pathway_mutasi_document",
+      "community": 0,
+      "norm_label": "jalur mutasi document (smpn 1)"
+    },
+    {
+      "label": "Jalur Prestasi Document (SMPN 1)",
+      "file_type": "document",
+      "source_file": "raw/smpn1_pathway_prestasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/6058e604-2df5-e011-91f0-e9feaa2e9d74?filter=semua&jalur=prestasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn1_pathway_prestasi_document",
+      "community": 2,
+      "norm_label": "jalur prestasi document (smpn 1)"
+    },
+    {
+      "label": "SMP NEGERI 3 BOGOR Overview Document",
+      "file_type": "document",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_document",
+      "community": 1,
+      "norm_label": "smp negeri 3 bogor overview document"
+    },
+    {
+      "label": "SMP NEGERI 3 BOGOR",
+      "file_type": "concept",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_smp_negeri_3_bogor",
+      "community": 1,
+      "norm_label": "smp negeri 3 bogor"
+    },
+    {
+      "label": "Jalur Afirmasi (SMPN 3)",
+      "file_type": "concept",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_pathway_afirmasi",
+      "community": 1,
+      "norm_label": "jalur afirmasi (smpn 3)"
+    },
+    {
+      "label": "Jalur Domisili (SMPN 3)",
+      "file_type": "concept",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_pathway_domisili",
+      "community": 1,
+      "norm_label": "jalur domisili (smpn 3)"
+    },
+    {
+      "label": "Jalur Mutasi (SMPN 3)",
+      "file_type": "concept",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_pathway_mutasi",
+      "community": 1,
+      "norm_label": "jalur mutasi (smpn 3)"
+    },
+    {
+      "label": "Jalur Prestasi (SMPN 3)",
+      "file_type": "concept",
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_overview_pathway_prestasi",
+      "community": 2,
+      "norm_label": "jalur prestasi (smpn 3)"
+    },
+    {
+      "label": "Jalur Afirmasi Document (SMPN 3)",
+      "file_type": "document",
+      "source_file": "raw/smpn3_pathway_afirmasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3?filter=semua&jalur=afirmasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_pathway_afirmasi_document",
+      "community": 1,
+      "norm_label": "jalur afirmasi document (smpn 3)"
+    },
+    {
+      "label": "Jalur Domisili Document (SMPN 3)",
+      "file_type": "document",
+      "source_file": "raw/smpn3_pathway_domisili.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3?filter=semua&jalur=domisili&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_pathway_domisili_document",
+      "community": 1,
+      "norm_label": "jalur domisili document (smpn 3)"
+    },
+    {
+      "label": "Jalur Mutasi Document (SMPN 3)",
+      "file_type": "document",
+      "source_file": "raw/smpn3_pathway_mutasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3?filter=semua&jalur=mutasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_pathway_mutasi_document",
+      "community": 1,
+      "norm_label": "jalur mutasi document (smpn 3)"
+    },
+    {
+      "label": "Jalur Prestasi Document (SMPN 3)",
+      "file_type": "document",
+      "source_file": "raw/smpn3_pathway_prestasi.md",
+      "source_location": null,
+      "source_url": "https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/e0000704-2df5-e011-842f-5d02e391b0b3?filter=semua&jalur=prestasi&limit=300&page=1",
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "raw_smpn3_pathway_prestasi_document",
+      "community": 2,
+      "norm_label": "jalur prestasi document (smpn 3)"
+    }
+  ],
+  "links": [
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_document",
+      "target": "raw_smpn1_overview_smp_negeri_1_bogor"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "target": "raw_smpn1_overview_pathway_afirmasi"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "target": "raw_smpn1_overview_pathway_domisili"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "target": "raw_smpn1_overview_pathway_mutasi"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "target": "raw_smpn1_overview_pathway_prestasi"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_smp_negeri_1_bogor",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_afirmasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_afirmasi_document",
+      "target": "raw_smpn1_overview_smp_negeri_1_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_domisili.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_domisili_document",
+      "target": "raw_smpn1_overview_smp_negeri_1_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_mutasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_mutasi_document",
+      "target": "raw_smpn1_overview_smp_negeri_1_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_prestasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_prestasi_document",
+      "target": "raw_smpn1_overview_smp_negeri_1_bogor"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_pathway_afirmasi",
+      "target": "raw_smpn3_overview_pathway_afirmasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_afirmasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_afirmasi_document",
+      "target": "raw_smpn1_overview_pathway_afirmasi"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_pathway_domisili",
+      "target": "raw_smpn3_overview_pathway_domisili"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_domisili.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_domisili_document",
+      "target": "raw_smpn1_overview_pathway_domisili"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_pathway_mutasi",
+      "target": "raw_smpn3_overview_pathway_mutasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_mutasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_mutasi_document",
+      "target": "raw_smpn1_overview_pathway_mutasi"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "raw/smpn1_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_overview_pathway_prestasi",
+      "target": "raw_smpn3_overview_pathway_prestasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_pathway_prestasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn1_pathway_prestasi_document",
+      "target": "raw_smpn1_overview_pathway_prestasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_overview_document",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_overview_smp_negeri_3_bogor",
+      "target": "raw_smpn3_overview_pathway_afirmasi"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_overview_smp_negeri_3_bogor",
+      "target": "raw_smpn3_overview_pathway_domisili"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_overview_smp_negeri_3_bogor",
+      "target": "raw_smpn3_overview_pathway_mutasi"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_overview_smp_negeri_3_bogor",
+      "target": "raw_smpn3_overview_pathway_prestasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_afirmasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_afirmasi_document",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_domisili.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_domisili_document",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_mutasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_mutasi_document",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_prestasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_prestasi_document",
+      "target": "raw_smpn3_overview_smp_negeri_3_bogor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_afirmasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_afirmasi_document",
+      "target": "raw_smpn3_overview_pathway_afirmasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_domisili.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_domisili_document",
+      "target": "raw_smpn3_overview_pathway_domisili"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_mutasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_mutasi_document",
+      "target": "raw_smpn3_overview_pathway_mutasi"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_pathway_prestasi.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "raw_smpn3_pathway_prestasi_document",
+      "target": "raw_smpn3_overview_pathway_prestasi"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "smpn1_admission_system",
+      "label": "SMPN 1 Bogor Admission System",
+      "nodes": [
+        "raw_smpn1_overview_smp_negeri_1_bogor",
+        "raw_smpn1_overview_pathway_afirmasi",
+        "raw_smpn1_overview_pathway_domisili",
+        "raw_smpn1_overview_pathway_mutasi",
+        "raw_smpn1_overview_pathway_prestasi"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn1_overview.md"
+    },
+    {
+      "id": "smpn3_admission_system",
+      "label": "SMPN 3 Bogor Admission System",
+      "nodes": [
+        "raw_smpn3_overview_smp_negeri_3_bogor",
+        "raw_smpn3_overview_pathway_afirmasi",
+        "raw_smpn3_overview_pathway_domisili",
+        "raw_smpn3_overview_pathway_mutasi",
+        "raw_smpn3_overview_pathway_prestasi"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "raw/smpn3_overview.md"
+    }
+  ],
+  "built_at_commit": "8adad03159aad9d20da3ef72f47fdfaae5f46ca7"
+}

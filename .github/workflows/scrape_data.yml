@@ -1,0 +1,37 @@
+name: Daily SPMB Data Scraper
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at 00:00 UTC (07:00 WIB)
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Run Scraper Script
+      run: python scraper.py
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add pendaftar_data.json
+        if git diff --staged --quiet; then
+          echo "No changes in data. Skipping commit."
+        else
+          git commit -m "chore: auto-update spmb pendaftar data [cron]"
+          git push
+        fi
