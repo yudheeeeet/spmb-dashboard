@@ -730,6 +730,59 @@ def main():
             color: var(--alert-text);
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
+
+        /* Modern styled school selection dropdown selector */
+        .school-dropdown {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.6rem 2.2rem 0.6rem 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            box-shadow: var(--shadow);
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%236366f1' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .school-dropdown:hover, .school-dropdown:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
+        }
+
+        /* School badges in Sekolah Tujuan column */
+        .school-tag {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .tag-smpn1 {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .tag-smpn3 {
+            background: rgba(168, 85, 247, 0.15);
+            color: #a855f7;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        /* Sekolah Tujuan Column Toggle */
+        .sekolah-col {
+            display: none;
+        }
+        body.show-sekolah .sekolah-col {
+            display: table-cell;
+        }
     </style>
 </head>
 <body>
@@ -775,10 +828,13 @@ def main():
         <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
             <button class="theme-toggle" id="theme-toggle" title="Toggle Light/Dark Mode">🌙</button>
             
-            <!-- School Tabs -->
-            <div class="tabs" id="school-tabs">
-                <button class="tab-btn active" onclick="switchSchool('smpn1')">SMPN 1 Bogor</button>
-                <button class="tab-btn" onclick="switchSchool('smpn3')">SMPN 3 Bogor</button>
+            <!-- School Selection Dropdown Selector -->
+            <div style="position: relative;">
+                <select id="school-select" class="school-dropdown" onchange="switchSchool(this.value)">
+                    <option value="semua">Semua Sekolah (SMPN 1 & SMPN 3)</option>
+                    <option value="smpn1">SMPN 1 Bogor</option>
+                    <option value="smpn3">SMPN 3 Bogor</option>
+                </select>
             </div>
             
             <!-- Pathway Tabs -->
@@ -829,6 +885,11 @@ def main():
                 <input type="text" class="search-input" id="search-bar" placeholder="Cari berdasarkan nama murid atau asal sekolah..." oninput="handleSearch()">
             </div>
         </div>
+        
+        <!-- Disclaimer note under table headers -->
+        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: -0.5rem; display: flex; align-items: center; gap: 0.4rem; padding: 0 0.5rem;">
+            <span>ℹ️</span> <em>Hasil ini bukan passing grade resmi, tapi hanya berdasarkan kuota dari masing masing jalur di website disdik kota bogor</em>
+        </div>
 
         <div class="table-wrapper">
             <table id="pendaftar-table">
@@ -838,6 +899,7 @@ def main():
                         <th onclick="handleSort('no_pendaftaran')">No. Pendaftaran</th>
                         <th onclick="handleSort('nama_murid')">Nama Murid</th>
                         <th onclick="handleSort('asal_satuan_pendidikan')">Asal Sekolah</th>
+                        <th class="sekolah-col" onclick="handleSort('schoolKey')">Sekolah Tujuan</th>
                         <th onclick="handleSort('sub_jalur')">Sub Jalur</th>
                         <th onclick="handleSort('nilai_rapor')">Total RAPOR + TKA</th>
                         <th onclick="handleSort('jarak')">Jarak (m)</th>
@@ -1062,34 +1124,50 @@ def main():
         }
 
         function initDashboard() {
-            initSchoolInfo();
-            switchSchool('smpn1');
+            document.getElementById('school-select').value = 'semua';
+            switchSchool('semua');
         }
 
         function initSchoolInfo() {
-            const school = spmbData.schools[currentSchool] || {};
-            const info = school.info || {};
-            document.getElementById('school-name').textContent = info.nama_satuan_pendidikan || 'Memuat Sekolah...';
-            document.getElementById('school-npsn').textContent = info.npsn || '-';
-            document.getElementById('school-total').textContent = info.jumlah_terverifikasi || '-';
-            
-            // Format Last updated
-            const rawUpdate = info.terakhir_diperbarui || 'Baru Saja';
-            document.getElementById('last-update').textContent = rawUpdate;
+            if (!spmbData || !spmbData.schools) return;
+
+            if (currentSchool === 'semua') {
+                document.getElementById('school-name').textContent = 'Semua Sekolah (SMPN 1 & SMPN 3)';
+                document.getElementById('school-npsn').textContent = 'Multi-NPSN';
+                
+                // Sum verified applicants
+                let totalVerified = 0;
+                totalVerified += spmbData.schools['smpn1']?.info?.jumlah_terverifikasi || 0;
+                totalVerified += spmbData.schools['smpn3']?.info?.jumlah_terverifikasi || 0;
+                document.getElementById('school-total').textContent = totalVerified;
+                
+                // Get latest update time
+                const up1 = spmbData.schools['smpn1']?.info?.terakhir_diperbarui || '';
+                const up3 = spmbData.schools['smpn3']?.info?.terakhir_diperbarui || '';
+                const lastUpdate = up1 > up3 ? up1 : (up3 || up1 || '-');
+                document.getElementById('last-update').textContent = lastUpdate;
+            } else {
+                const school = spmbData.schools[currentSchool] || {};
+                const info = school.info || {};
+                document.getElementById('school-name').textContent = info.nama_satuan_pendidikan || 'Memuat Sekolah...';
+                document.getElementById('school-npsn').textContent = info.npsn || '-';
+                document.getElementById('school-total').textContent = info.jumlah_terverifikasi || '-';
+                document.getElementById('last-update').textContent = info.terakhir_diperbarui || '-';
+            }
         }
 
         function switchSchool(schoolKey) {
             currentSchool = schoolKey;
             
-            // Update school tabs active class
-            const schoolBtns = document.querySelectorAll('#school-tabs .tab-btn');
-            schoolBtns.forEach(btn => {
-                if (btn.textContent.toLowerCase().includes(schoolKey === 'smpn1' ? '1' : '3')) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+            // Synchronize dropdown value
+            document.getElementById('school-select').value = schoolKey;
+
+            // Toggle show-sekolah class on body to control column visibility
+            if (schoolKey === 'semua') {
+                document.body.classList.add('show-sekolah');
+            } else {
+                document.body.classList.remove('show-sekolah');
+            }
 
             initSchoolInfo();
             switchPathway(currentPathway); // Refresh view
@@ -1141,7 +1219,7 @@ def main():
                 'afirmasi': 'Jalur Afirmasi',
                 'mutasi': 'Jalur Mutasi'
             };
-            const schoolNameShort = currentSchool.toUpperCase();
+            const schoolNameShort = currentSchool === 'semua' ? 'Semua Sekolah' : currentSchool.toUpperCase();
             document.getElementById('table-title').textContent = `Daftar Pendaftar - ${nameMap[pathwayKey]} (${schoolNameShort})`;
 
             applyFiltersAndSort();
@@ -1203,8 +1281,20 @@ def main():
             if (!spmbData) return;
             
             const searchQuery = document.getElementById('search-bar').value.toLowerCase().trim();
-            const schoolData = spmbData.schools[currentSchool] || {};
-            let applicants = schoolData.pathways[currentPathway] || [];
+            
+            let applicants = [];
+            if (currentSchool === 'semua') {
+                const smpn1List = spmbData.schools['smpn1']?.pathways[currentPathway] || [];
+                const smpn3List = spmbData.schools['smpn3']?.pathways[currentPathway] || [];
+                applicants = [
+                    ...smpn1List.map(app => ({ ...app, schoolKey: 'smpn1' })),
+                    ...smpn3List.map(app => ({ ...app, schoolKey: 'smpn3' }))
+                ];
+            } else {
+                const schoolData = spmbData.schools[currentSchool] || {};
+                const list = schoolData.pathways[currentPathway] || [];
+                applicants = list.map(app => ({ ...app, schoolKey: currentSchool }));
+            }
 
             // 1. Filter by sub-pathway (Prestasi only)
             if (currentPathway === 'prestasi') {
@@ -1234,6 +1324,9 @@ def main():
             const getSortVal = (app, key) => {
                 if (key === 'rank') {
                     return app.officialRank || 9999;
+                }
+                if (key === 'schoolKey') {
+                    return app.schoolKey || '';
                 }
                 let val = app[key];
                 
@@ -1333,6 +1426,7 @@ def main():
 
             const quotaLimit = getQuotaLimit();
             const isOfficialOrder = (
+                currentSchool !== 'semua' && // Disable cutoff line for combined view
                 document.getElementById('search-bar').value.toLowerCase().trim() === '' &&
                 currentResidency === 'semua' &&
                 (
@@ -1385,11 +1479,16 @@ def main():
                     ? `<span class="status-pill pill-safe">Aman</span>` 
                     : `<span class="status-pill pill-out">Gugur</span>`;
 
+                const schoolTag = app.schoolKey === 'smpn1' 
+                    ? '<span class="school-tag tag-smpn1">SMPN 1</span>' 
+                    : '<span class="school-tag tag-smpn3">SMPN 3</span>';
+
                 tr.innerHTML = `
                     <td>${rankCell}</td>
                     <td>${app.no_pendaftaran || '-'}</td>
                     <td>${app.nama_murid || '-'}</td>
                     <td>${app.asal_satuan_pendidikan || '-'}</td>
+                    <td class="sekolah-col">${schoolTag}</td>
                     <td>${app.sub_jalur || '-'}</td>
                     <td>${totalRaporTka}</td>
                     <td>${app.jarak || '-'}</td>
@@ -1469,8 +1568,18 @@ def main():
 
             if (!spmbData) return;
 
-            const schoolData = spmbData.schools[currentSchool] || {};
-            let applicants = schoolData.pathways[currentPathway] || [];
+            let applicants = [];
+            if (currentSchool === 'semua') {
+                const smpn1List = spmbData.schools['smpn1']?.pathways[currentPathway] || [];
+                const smpn3List = spmbData.schools['smpn3']?.pathways[currentPathway] || [];
+                applicants = [
+                    ...smpn1List.map(app => ({ ...app, schoolKey: 'smpn1' })),
+                    ...smpn3List.map(app => ({ ...app, schoolKey: 'smpn3' }))
+                ];
+            } else {
+                const schoolData = spmbData.schools[currentSchool] || {};
+                applicants = schoolData.pathways[currentPathway] || [];
+            }
 
             // 1. Filter applicants for statistics based on active filters
             if (currentPathway === 'prestasi') {
@@ -1638,7 +1747,7 @@ def main():
                     skorSertifikat = app.skor_sertifikat !== '-' ? parseFloat(app.skor_sertifikat) : '-';
                 }
 
-                return {
+                const item = {
                     'No': idx + 1,
                     'No. Pendaftaran': app.no_pendaftaran || '',
                     'Nama Murid': app.nama_murid || '',
@@ -1650,6 +1759,14 @@ def main():
                     'Domisili': app.status_domisili || '',
                     'Skor Akhir': app.skor_akhir !== '-' ? parseFloat(app.skor_akhir) : '-'
                 };
+
+                if (currentSchool === 'semua' || app.schoolKey) {
+                    item['Sekolah Tujuan'] = app.schoolKey === 'smpn1' ? 'SMPN 1 Bogor' : 'SMPN 3 Bogor';
+                }
+
+                item['Status'] = app.isSafe !== false ? 'Aman' : 'Gugur';
+
+                return item;
             });
         }
 
@@ -1677,34 +1794,67 @@ def main():
         function exportSchoolToExcel() {
             if (!spmbData) return;
             const wb = XLSX.utils.book_new();
-            const schoolData = spmbData.schools[currentSchool] || {};
-            const pathways = schoolData.pathways || {};
             
-            for (const [key, list] of Object.entries(pathways)) {
-                if (key === 'prestasi') {
-                    // Semua Prestasi
-                    const wsSemua = XLSX.utils.json_to_sheet(getFormattedExcelList(list));
-                    XLSX.utils.book_append_sheet(wb, wsSemua, 'Semua Prestasi');
+            if (currentSchool === 'semua') {
+                for (const schoolKey of ['smpn1', 'smpn3']) {
+                    const schoolData = spmbData.schools[schoolKey] || {};
+                    const pathways = schoolData.pathways || {};
+                    const prefix = schoolKey.toUpperCase() + '_';
+                    
+                    for (const [key, list] of Object.entries(pathways)) {
+                        const listWithSchool = list.map(app => ({ ...app, schoolKey }));
+                        if (key === 'prestasi') {
+                            const wsSemua = XLSX.utils.json_to_sheet(getFormattedExcelList(listWithSchool));
+                            XLSX.utils.book_append_sheet(wb, wsSemua, prefix + 'Semua_Prestasi');
 
-                    // Prestasi Rapor
-                    const raporApps = list.filter(app => app.sub_jalur === 'Prestasi Rapor');
-                    raporApps.sort((a,b) => (parseFloat(b.nilai_rapor) || 0) - (parseFloat(a.nilai_rapor) || 0));
-                    const wsRapor = XLSX.utils.json_to_sheet(getFormattedExcelList(raporApps));
-                    XLSX.utils.book_append_sheet(wb, wsRapor, 'Prestasi Rapor');
+                            const raporApps = listWithSchool.filter(app => app.sub_jalur === 'Prestasi Rapor');
+                            raporApps.sort((a,b) => (parseFloat(b.nilai_rapor) || 0) - (parseFloat(a.nilai_rapor) || 0));
+                            const wsRapor = XLSX.utils.json_to_sheet(getFormattedExcelList(raporApps));
+                            XLSX.utils.book_append_sheet(wb, wsRapor, prefix + 'Prestasi_Rapor');
 
-                    // Prestasi Akademik
-                    const akadApps = list.filter(app => app.sub_jalur === 'Prestasi Akademik/Non Akademik');
-                    akadApps.sort((a,b) => (parseFloat(b.skor_sertifikat) || 0) - (parseFloat(a.skor_sertifikat) || 0));
-                    const wsAkad = XLSX.utils.json_to_sheet(getFormattedExcelList(akadApps));
-                    XLSX.utils.book_append_sheet(wb, wsAkad, 'Prestasi Akademik');
-                } else {
-                    const ws = XLSX.utils.json_to_sheet(getFormattedExcelList(list));
-                    const nameMap = {
-                        'afirmasi': 'Afirmasi',
-                        'domisili': 'Domisili',
-                        'mutasi': 'Mutasi'
-                    };
-                    XLSX.utils.book_append_sheet(wb, ws, nameMap[key] || key);
+                            const akadApps = listWithSchool.filter(app => app.sub_jalur === 'Prestasi Akademik/Non Akademik');
+                            akadApps.sort((a,b) => (parseFloat(b.skor_sertifikat) || 0) - (parseFloat(a.skor_sertifikat) || 0));
+                            const wsAkad = XLSX.utils.json_to_sheet(getFormattedExcelList(akadApps));
+                            XLSX.utils.book_append_sheet(wb, wsAkad, prefix + 'Prestasi_Akademik');
+                        } else {
+                            const ws = XLSX.utils.json_to_sheet(getFormattedExcelList(listWithSchool));
+                            const nameMap = {
+                                'afirmasi': 'Afirmasi',
+                                'domisili': 'Domisili',
+                                'mutasi': 'Mutasi'
+                            };
+                            XLSX.utils.book_append_sheet(wb, ws, prefix + (nameMap[key] || key));
+                        }
+                    }
+                }
+            } else {
+                const schoolData = spmbData.schools[currentSchool] || {};
+                const pathways = schoolData.pathways || {};
+                
+                for (const [key, list] of Object.entries(pathways)) {
+                    const listWithSchool = list.map(app => ({ ...app, schoolKey: currentSchool }));
+                    if (key === 'prestasi') {
+                        const wsSemua = XLSX.utils.json_to_sheet(getFormattedExcelList(listWithSchool));
+                        XLSX.utils.book_append_sheet(wb, wsSemua, 'Semua Prestasi');
+
+                        const raporApps = listWithSchool.filter(app => app.sub_jalur === 'Prestasi Rapor');
+                        raporApps.sort((a,b) => (parseFloat(b.nilai_rapor) || 0) - (parseFloat(a.nilai_rapor) || 0));
+                        const wsRapor = XLSX.utils.json_to_sheet(getFormattedExcelList(raporApps));
+                        XLSX.utils.book_append_sheet(wb, wsRapor, 'Prestasi Rapor');
+
+                        const akadApps = listWithSchool.filter(app => app.sub_jalur === 'Prestasi Akademik/Non Akademik');
+                        akadApps.sort((a,b) => (parseFloat(b.skor_sertifikat) || 0) - (parseFloat(a.skor_sertifikat) || 0));
+                        const wsAkad = XLSX.utils.json_to_sheet(getFormattedExcelList(akadApps));
+                        XLSX.utils.book_append_sheet(wb, wsAkad, 'Prestasi Akademik');
+                    } else {
+                        const ws = XLSX.utils.json_to_sheet(getFormattedExcelList(listWithSchool));
+                        const nameMap = {
+                            'afirmasi': 'Afirmasi',
+                            'domisili': 'Domisili',
+                            'mutasi': 'Mutasi'
+                        };
+                        XLSX.utils.book_append_sheet(wb, ws, nameMap[key] || key);
+                    }
                 }
             }
             
