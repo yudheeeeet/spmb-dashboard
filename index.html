@@ -634,6 +634,98 @@
                 flex-direction: column;
             }
         }
+
+        /* Quota Cutoff Line Styling */
+        .quota-cutoff-row td {
+            padding: 0.8rem 0 !important;
+            border-bottom: none !important;
+            background: transparent !important;
+        }
+
+        .quota-cutoff-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 0.8rem 0;
+        }
+
+        .quota-cutoff-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #ef4444; /* Thicker Bright Red */
+            z-index: 1;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+        }
+
+        .quota-cutoff-text {
+            background: var(--card-bg);
+            color: #ef4444;
+            padding: 0.45rem 1.75rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border: 2px solid #ef4444;
+            border-radius: 30px;
+            z-index: 2;
+            box-shadow: var(--shadow);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Dimmed rows for students outside quota */
+        tr.outside-quota {
+            opacity: 0.38 !important;
+            background: rgba(239, 68, 68, 0.02) !important;
+        }
+
+        html.light tr.outside-quota {
+            background: rgba(15, 23, 42, 0.04) !important;
+        }
+
+        tr.outside-quota:hover {
+            opacity: 0.95 !important;
+            background-color: var(--table-row-hover) !important;
+        }
+
+        /* Border highlights for clear admission standing */
+        tr:not(.outside-quota):not(.quota-cutoff-row) td:first-child {
+            border-left: 4px solid var(--secondary) !important;
+        }
+
+        tr.outside-quota td:first-child {
+            border-left: 4px solid var(--alert-text) !important;
+        }
+
+        /* Status pills */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pill-safe {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--secondary);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .pill-out {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--alert-text);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -748,6 +840,7 @@
                         <th onclick="handleSort('skor_sertifikat')">Skor Sertifikat</th>
                         <th onclick="handleSort('status_domisili')">Domisili</th>
                         <th onclick="handleSort('skor_akhir')">Skor Akhir</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
@@ -823,6 +916,103 @@
             });
         });
 
+        // Compute official rank and safe status for all pathways
+        function computeOfficialStatus() {
+            if (!spmbData) return;
+            
+            // Loop through each school
+            for (const schoolKey of ['smpn1', 'smpn3']) {
+                const schoolData = spmbData.schools[schoolKey] || {};
+                const pathways = schoolData.pathways || {};
+                
+                // 1. Domisili (quota = 130)
+                if (pathways.domisili) {
+                    const domisiliList = [...pathways.domisili];
+                    domisiliList.sort((a, b) => {
+                        const wilA = a.sub_jalur || a.subJalur || '';
+                        const wilB = b.sub_jalur || b.subJalur || '';
+                        if (wilA !== wilB) return wilA.localeCompare(wilB);
+                        const jarA = parseFloat(a.jarak) || Infinity;
+                        const jarB = parseFloat(b.jarak) || Infinity;
+                        if (jarA !== jarB) return jarA - jarB;
+                        return (a.no_pendaftaran || '').localeCompare(b.no_pendaftaran || '');
+                    });
+                    domisiliList.forEach((app, idx) => {
+                        const originalApp = pathways.domisili.find(x => x.no_pendaftaran === app.no_pendaftaran);
+                        if (originalApp) {
+                            originalApp.officialRank = idx + 1;
+                            originalApp.isSafe = (idx + 1) <= 130;
+                        }
+                    });
+                }
+
+                // 2. Afirmasi (quota = 81)
+                if (pathways.afirmasi) {
+                    const afirmasiList = [...pathways.afirmasi];
+                    afirmasiList.sort((a, b) => {
+                        const jarA = parseFloat(a.jarak) || Infinity;
+                        const jarB = parseFloat(b.jarak) || Infinity;
+                        if (jarA !== jarB) return jarA - jarB;
+                        return (a.no_pendaftaran || '').localeCompare(b.no_pendaftaran || '');
+                    });
+                    afirmasiList.forEach((app, idx) => {
+                        const originalApp = pathways.afirmasi.find(x => x.no_pendaftaran === app.no_pendaftaran);
+                        if (originalApp) {
+                            originalApp.officialRank = idx + 1;
+                            originalApp.isSafe = (idx + 1) <= 81;
+                        }
+                    });
+                }
+
+                // 3. Mutasi (quota = 16)
+                if (pathways.mutasi) {
+                    const mutasiList = [...pathways.mutasi];
+                    mutasiList.sort((a, b) => {
+                        const jarA = parseFloat(a.jarak) || Infinity;
+                        const jarB = parseFloat(b.jarak) || Infinity;
+                        if (jarA !== jarB) return jarA - jarB;
+                        return (a.no_pendaftaran || '').localeCompare(b.no_pendaftaran || '');
+                    });
+                    mutasiList.forEach((app, idx) => {
+                        const originalApp = pathways.mutasi.find(x => x.no_pendaftaran === app.no_pendaftaran);
+                        if (originalApp) {
+                            originalApp.officialRank = idx + 1;
+                            originalApp.isSafe = (idx + 1) <= 16;
+                        }
+                    });
+                }
+
+                // 4. Prestasi
+                if (pathways.prestasi) {
+                    // Prestasi Rapor (quota = 48)
+                    const raporApps = pathways.prestasi.filter(app => app.sub_jalur === 'Prestasi Rapor');
+                    raporApps.sort((a, b) => {
+                        const valA = parseFloat(a.nilai_rapor) || -Infinity;
+                        const valB = parseFloat(b.nilai_rapor) || -Infinity;
+                        if (valA !== valB) return valB - valA;
+                        return (a.no_pendaftaran || '').localeCompare(b.no_pendaftaran || '');
+                    });
+                    raporApps.forEach((app, idx) => {
+                        app.officialRank = idx + 1;
+                        app.isSafe = (idx + 1) <= 48;
+                    });
+
+                    // Prestasi Akademik (quota = 49)
+                    const akademikApps = pathways.prestasi.filter(app => app.sub_jalur === 'Prestasi Akademik/Non Akademik');
+                    akademikApps.sort((a, b) => {
+                        const valA = parseFloat(a.skor_sertifikat) || -Infinity;
+                        const valB = parseFloat(b.skor_sertifikat) || -Infinity;
+                        if (valA !== valB) return valB - valA;
+                        return (a.no_pendaftaran || '').localeCompare(b.no_pendaftaran || '');
+                    });
+                    akademikApps.forEach((app, idx) => {
+                        app.officialRank = idx + 1;
+                        app.isSafe = (idx + 1) <= 49;
+                    });
+                }
+            }
+        }
+
         // Load data dynamically
         function loadData() {
             fetch('./pendaftar_data.json')
@@ -834,6 +1024,7 @@
                 })
                 .then(data => {
                     spmbData = data;
+                    computeOfficialStatus();
                     document.getElementById('cors-alert').style.display = 'none';
                     initDashboard();
                 })
@@ -849,9 +1040,10 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const data = json_parse = JSON.parse(e.target.result);
+                    const data = JSON.parse(e.target.result);
                     if (data.schools) {
                         spmbData = data;
+                        computeOfficialStatus();
                         document.getElementById('cors-alert').style.display = 'none';
                         initDashboard();
                         alert('Data pendaftar_data.json berhasil dimuat secara lokal!');
@@ -930,11 +1122,9 @@
 
             // Set default sort config based on pathway
             if (pathwayKey === 'prestasi') {
-                sortConfig = { key: 'nilai_rapor', direction: 'desc' };
-            } else if (pathwayKey === 'domisili') {
-                sortConfig = { key: 'jarak', direction: 'asc' }; // shorter distance is better
+                sortConfig = { key: 'nilai_rapor', direction: 'desc' }; // Rapor desc for combined view
             } else {
-                sortConfig = { key: 'jarak', direction: 'asc' };
+                sortConfig = { key: 'rank', direction: 'asc' }; // official rank asc
             }
 
             // Reset search bar
@@ -973,10 +1163,10 @@
             });
 
             // Set sort key depending on subpathway
-            if (subPathwayKey === 'akademik') {
-                sortConfig = { key: 'skor_sertifikat', direction: 'desc' };
-            } else {
+            if (subPathwayKey === 'semua') {
                 sortConfig = { key: 'nilai_rapor', direction: 'desc' };
+            } else {
+                sortConfig = { key: 'rank', direction: 'asc' };
             }
 
             applyFiltersAndSort();
@@ -1038,6 +1228,9 @@
 
             // Helper to parse values for sorting
             const getSortVal = (app, key) => {
+                if (key === 'rank') {
+                    return app.officialRank || 9999;
+                }
                 let val = app[key];
                 
                 // Hide report score for academic pendaftar because it's duplicate of cert score
@@ -1061,6 +1254,15 @@
 
             // 4. Sort
             filteredApplicants.sort((a, b) => {
+                // Special official sorting for Domisili when sorting by rank or default
+                if (currentPathway === 'domisili' && (sortConfig.key === 'rank' || (sortConfig.key === 'jarak' && sortConfig.direction === 'asc'))) {
+                    const wilA = a.sub_jalur || a.subJalur || '';
+                    const wilB = b.sub_jalur || b.subJalur || '';
+                    if (wilA !== wilB) {
+                        return sortConfig.direction === 'asc' ? wilA.localeCompare(wilB) : wilB.localeCompare(wilA);
+                    }
+                }
+                
                 const valA = getSortVal(a, sortConfig.key);
                 const valB = getSortVal(b, sortConfig.key);
 
@@ -1101,6 +1303,18 @@
             applyFiltersAndSort();
         }
 
+        function getQuotaLimit() {
+            if (currentPathway === 'domisili') return 130;
+            if (currentPathway === 'afirmasi') return 81;
+            if (currentPathway === 'mutasi') return 16;
+            if (currentPathway === 'prestasi') {
+                if (currentSubPathway === 'rapor') return 48;
+                if (currentSubPathway === 'akademik') return 49;
+                if (currentSubPathway === 'semua') return 97;
+            }
+            return 0;
+        }
+
         function renderTable() {
             const tbody = document.getElementById('table-body');
             const emptyState = document.getElementById('table-empty');
@@ -1113,6 +1327,21 @@
                 emptyState.style.display = 'none';
             }
 
+            const quotaLimit = getQuotaLimit();
+            const isOfficialOrder = (
+                document.getElementById('search-bar').value.toLowerCase().trim() === '' &&
+                currentResidency === 'semua' &&
+                (
+                    sortConfig.key === 'rank' ||
+                    (currentPathway === 'domisili' && sortConfig.key === 'jarak' && sortConfig.direction === 'asc') ||
+                    (currentPathway === 'afirmasi' && sortConfig.key === 'jarak' && sortConfig.direction === 'asc') ||
+                    (currentPathway === 'mutasi' && sortConfig.key === 'jarak' && sortConfig.direction === 'asc') ||
+                    (currentPathway === 'prestasi' && currentSubPathway === 'semua' && sortConfig.key === 'nilai_rapor' && sortConfig.direction === 'desc') ||
+                    (currentPathway === 'prestasi' && currentSubPathway === 'rapor' && sortConfig.key === 'nilai_rapor' && sortConfig.direction === 'desc') ||
+                    (currentPathway === 'prestasi' && currentSubPathway === 'akademik' && sortConfig.key === 'skor_sertifikat' && sortConfig.direction === 'desc')
+                )
+            );
+
             filteredApplicants.forEach((app, idx) => {
                 const tr = document.createElement('tr');
                 const rankNum = idx + 1;
@@ -1120,6 +1349,12 @@
                 // Add classes for styling rank 1, 2, 3
                 if (rankNum <= 3) {
                     tr.classList.add('highlight-row', `highlight-row-${rankNum}`);
+                }
+
+                // Add class if outside quota
+                const isSafe = app.isSafe !== false;
+                if (!isSafe) {
+                    tr.classList.add('outside-quota');
                 }
 
                 let rankCell = rankNum.toString();
@@ -1142,6 +1377,10 @@
                     skorSertifikat = app.skor_sertifikat || '-';
                 }
 
+                const statusBadge = isSafe 
+                    ? `<span class="status-pill pill-safe">Aman</span>` 
+                    : `<span class="status-pill pill-out">Gugur</span>`;
+
                 tr.innerHTML = `
                     <td>${rankCell}</td>
                     <td>${app.no_pendaftaran || '-'}</td>
@@ -1153,8 +1392,34 @@
                     <td>${skorSertifikat}</td>
                     <td>${app.status_domisili || '-'}</td>
                     <td>${app.skor_akhir || '-'}</td>
+                    <td>${statusBadge}</td>
                 `;
                 tbody.appendChild(tr);
+
+                // Insert cutoff line if in official order and exactly at the cutoff point
+                if (isOfficialOrder && (idx + 1) === quotaLimit) {
+                    const cutoffTr = document.createElement('tr');
+                    cutoffTr.className = 'quota-cutoff-row';
+                    
+                    let quotaLabel = `Batas Kuota Terpenuhi (${quotaLimit} Siswa)`;
+                    if (currentPathway === 'domisili') quotaLabel = `Batas Kuota Domisili Terpenuhi (130 Siswa)`;
+                    if (currentPathway === 'afirmasi') quotaLabel = `Batas Kuota Afirmasi Terpenuhi (81 Siswa)`;
+                    if (currentPathway === 'mutasi') quotaLabel = `Batas Kuota Mutasi Terpenuhi (16 Siswa)`;
+                    if (currentPathway === 'prestasi') {
+                        if (currentSubPathway === 'rapor') quotaLabel = `Batas Kuota Prestasi Rapor Terpenuhi (48 Siswa)`;
+                        if (currentSubPathway === 'akademik') quotaLabel = `Batas Kuota Prestasi Akademik Terpenuhi (49 Siswa)`;
+                        if (currentSubPathway === 'semua') quotaLabel = `Batas Total Kuota Prestasi Terpenuhi (97 Siswa)`;
+                    }
+
+                    cutoffTr.innerHTML = `
+                        <td colspan="11">
+                            <div class="quota-cutoff-line">
+                                <span class="quota-cutoff-text">🛑 ${quotaLabel} 🛑</span>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(cutoffTr);
+                }
             });
         }
 
