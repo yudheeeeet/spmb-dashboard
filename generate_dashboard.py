@@ -7,7 +7,7 @@ def main():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard SPMB 2026 - SMPN 1 & SMPN 3 Bogor</title>
+    <title>Dashboard SPMB 2026 - SMP Negeri Kota Bogor</title>
     <!-- Google Fonts Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -831,9 +831,7 @@ def main():
             <!-- School Selection Dropdown Selector -->
             <div style="position: relative;">
                 <select id="school-select" class="school-dropdown" onchange="switchSchool(this.value)">
-                    <option value="semua">Semua Sekolah (SMPN 1 & SMPN 3)</option>
-                    <option value="smpn1">SMPN 1 Bogor</option>
-                    <option value="smpn3">SMPN 3 Bogor</option>
+                    <option value="semua">Semua Sekolah (SMP Negeri Kota Bogor)</option>
                 </select>
             </div>
             
@@ -925,12 +923,94 @@ def main():
 
     <script>
         let spmbData = null; // Loaded dynamically
-        let currentSchool = 'smpn1';
+        let currentSchool = 'semua';
         let currentPathway = 'prestasi';
         let currentSubPathway = 'semua';
         let currentResidency = 'semua'; // semua, dalam, luar
         let filteredApplicants = [];
         let sortConfig = { key: 'nilai_rapor', direction: 'desc' };
+
+        const schoolQuotas = {
+            'smpn1': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn2': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn3': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn4': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn5': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn6': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn7': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn8': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn9': { domisili: 136, afirmasi: 86, mutasi: 17, prestasi: 103 },
+            'smpn10': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn11': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn12': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn13': { domisili: 106, afirmasi: 67, mutasi: 13, prestasi: 80 },
+            'smpn14': { domisili: 144, afirmasi: 90, mutasi: 18, prestasi: 108 },
+            'smpn15': { domisili: 144, afirmasi: 90, mutasi: 18, prestasi: 108 },
+            'smpn16': { domisili: 144, afirmasi: 90, mutasi: 18, prestasi: 108 },
+            'smpn17': { domisili: 108, afirmasi: 68, mutasi: 14, prestasi: 82 },
+            'smpn18': { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 },
+            'smpn19': { domisili: 136, afirmasi: 86, mutasi: 17, prestasi: 103 },
+            'smpn20': { domisili: 116, afirmasi: 72, mutasi: 14, prestasi: 86 },
+            'smpn21': { domisili: 72, afirmasi: 45, mutasi: 9,  prestasi: 54 },
+            'smpn22': { domisili: 116, afirmasi: 72, mutasi: 14, prestasi: 86 },
+            'smpn23': { domisili: 72, afirmasi: 45, mutasi: 9,  prestasi: 54 }
+        };
+
+        function getSchoolTag(schoolKey) {
+            if (!spmbData || !spmbData.schools) return schoolKey.toUpperCase();
+            const schoolName = spmbData.schools[schoolKey]?.info?.nama_satuan_pendidikan || schoolKey.toUpperCase();
+            let shortName = schoolName;
+            if (schoolName.includes('SMP NEGERI')) {
+                shortName = schoolName.replace('SMP NEGERI', 'SMPN');
+            } else if (schoolName.includes('SEKOLAH MENENGAH PERTAMA NEGERI')) {
+                shortName = schoolName.replace('SEKOLAH MENENGAH PERTAMA NEGERI', 'SMPN');
+            }
+            shortName = shortName.replace(/BOGOR|KOTA BOGOR/gi, '').trim();
+
+            const colors = [
+                { bg: 'rgba(99, 102, 241, 0.15)', text: '#6366f1', border: 'rgba(99, 102, 241, 0.3)' }, // Indigo
+                { bg: 'rgba(168, 85, 247, 0.15)', text: '#a855f7', border: 'rgba(168, 85, 247, 0.3)' }, // Purple
+                { bg: 'rgba(10, 185, 129, 0.15)', text: '#10b981', border: 'rgba(10, 185, 129, 0.3)' }, // Green
+                { bg: 'rgba(245, 158, 11, 0.15)', text: '#f59e0b', border: 'rgba(245, 158, 11, 0.3)' },  // Amber
+                { bg: 'rgba(239, 68, 68, 0.15)', text: '#ef4444', border: 'rgba(239, 68, 68, 0.3)' },   // Red
+                { bg: 'rgba(6, 182, 212, 0.15)', text: '#06b6d4', border: 'rgba(6, 182, 212, 0.3)' },   // Cyan
+                { bg: 'rgba(236, 72, 153, 0.15)', text: '#ec4899', border: 'rgba(236, 72, 153, 0.3)' },  // Pink
+                { bg: 'rgba(14, 165, 233, 0.15)', text: '#0ea5e9', border: 'rgba(14, 165, 233, 0.3)' },  // Sky
+            ];
+            
+            let hash = 0;
+            for (let i = 0; i < schoolKey.length; i++) {
+                hash = schoolKey.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const colorIdx = Math.abs(hash) % colors.length;
+            const c = colors[colorIdx];
+            
+            return `<span class="school-tag" style="background: ${c.bg}; color: ${c.text}; border: 1px solid ${c.border};">${shortName}</span>`;
+        }
+
+        function populateSchoolDropdown() {
+            const select = document.getElementById('school-select');
+            select.innerHTML = '';
+            
+            const optAll = document.createElement('option');
+            optAll.value = 'semua';
+            optAll.textContent = 'Semua Sekolah (SMP Negeri Kota Bogor)';
+            select.appendChild(optAll);
+            
+            const schoolKeys = Object.keys(spmbData.schools).sort((a, b) => {
+                const numA = parseInt(a.replace(/\D/g, '')) || 0;
+                const numB = parseInt(b.replace(/\D/g, '')) || 0;
+                return numA - numB;
+            });
+            
+            schoolKeys.forEach(schoolKey => {
+                const schoolInfo = spmbData.schools[schoolKey]?.info || {};
+                const opt = document.createElement('option');
+                opt.value = schoolKey;
+                opt.textContent = schoolInfo.nama_satuan_pendidikan || schoolKey.toUpperCase();
+                select.appendChild(opt);
+            });
+        }
 
         // Init page
         document.addEventListener('DOMContentLoaded', () => {
@@ -987,11 +1067,12 @@ def main():
             if (!spmbData) return;
             
             // Loop through each school
-            for (const schoolKey of ['smpn1', 'smpn3']) {
+            for (const schoolKey of Object.keys(spmbData.schools)) {
                 const schoolData = spmbData.schools[schoolKey] || {};
                 const pathways = schoolData.pathways || {};
+                const quotas = schoolQuotas[schoolKey] || { domisili: 130, afirmasi: 81, mutasi: 16, prestasi: 97 };
                 
-                // 1. Domisili (quota = 130)
+                // 1. Domisili
                 if (pathways.domisili) {
                     const domisiliList = [...pathways.domisili];
                     domisiliList.sort((a, b) => {
@@ -1007,12 +1088,12 @@ def main():
                         const originalApp = pathways.domisili.find(x => x.no_pendaftaran === app.no_pendaftaran);
                         if (originalApp) {
                             originalApp.officialRank = idx + 1;
-                            originalApp.isSafe = (idx + 1) <= 130;
+                            originalApp.isSafe = (idx + 1) <= quotas.domisili;
                         }
                     });
                 }
 
-                // 2. Afirmasi (quota = 81)
+                // 2. Afirmasi
                 if (pathways.afirmasi) {
                     const afirmasiList = [...pathways.afirmasi];
                     afirmasiList.sort((a, b) => {
@@ -1025,12 +1106,12 @@ def main():
                         const originalApp = pathways.afirmasi.find(x => x.no_pendaftaran === app.no_pendaftaran);
                         if (originalApp) {
                             originalApp.officialRank = idx + 1;
-                            originalApp.isSafe = (idx + 1) <= 81;
+                            originalApp.isSafe = (idx + 1) <= quotas.afirmasi;
                         }
                     });
                 }
 
-                // 3. Mutasi (quota = 16)
+                // 3. Mutasi
                 if (pathways.mutasi) {
                     const mutasiList = [...pathways.mutasi];
                     mutasiList.sort((a, b) => {
@@ -1043,14 +1124,17 @@ def main():
                         const originalApp = pathways.mutasi.find(x => x.no_pendaftaran === app.no_pendaftaran);
                         if (originalApp) {
                             originalApp.officialRank = idx + 1;
-                            originalApp.isSafe = (idx + 1) <= 16;
+                            originalApp.isSafe = (idx + 1) <= quotas.mutasi;
                         }
                     });
                 }
 
                 // 4. Prestasi
                 if (pathways.prestasi) {
-                    // Prestasi Rapor (quota = 48)
+                    const totalPrestasi = quotas.prestasi;
+                    const limitRapor = Math.floor(totalPrestasi / 2);
+                    const limitAkad = Math.ceil(totalPrestasi / 2);
+
                     const raporApps = pathways.prestasi.filter(app => app.sub_jalur === 'Prestasi Rapor');
                     raporApps.sort((a, b) => {
                         const valA = parseFloat(a.nilai_rapor) || -Infinity;
@@ -1060,10 +1144,9 @@ def main():
                     });
                     raporApps.forEach((app, idx) => {
                         app.officialRank = idx + 1;
-                        app.isSafe = (idx + 1) <= 48;
+                        app.isSafe = (idx + 1) <= limitRapor;
                     });
 
-                    // Prestasi Akademik (quota = 49)
                     const akademikApps = pathways.prestasi.filter(app => app.sub_jalur === 'Prestasi Akademik/Non Akademik');
                     akademikApps.sort((a, b) => {
                         const valA = parseFloat(a.skor_sertifikat) || -Infinity;
@@ -1073,7 +1156,7 @@ def main():
                     });
                     akademikApps.forEach((app, idx) => {
                         app.officialRank = idx + 1;
-                        app.isSafe = (idx + 1) <= 49;
+                        app.isSafe = (idx + 1) <= limitAkad;
                     });
                 }
             }
@@ -1124,6 +1207,7 @@ def main():
         }
 
         function initDashboard() {
+            populateSchoolDropdown();
             document.getElementById('school-select').value = 'semua';
             switchSchool('semua');
         }
@@ -1132,20 +1216,21 @@ def main():
             if (!spmbData || !spmbData.schools) return;
 
             if (currentSchool === 'semua') {
-                document.getElementById('school-name').textContent = 'Semua Sekolah (SMPN 1 & SMPN 3)';
+                document.getElementById('school-name').textContent = 'Semua Sekolah (SMP Negeri Kota Bogor)';
                 document.getElementById('school-npsn').textContent = 'Multi-NPSN';
                 
                 // Sum verified applicants
                 let totalVerified = 0;
-                totalVerified += spmbData.schools['smpn1']?.info?.jumlah_terverifikasi || 0;
-                totalVerified += spmbData.schools['smpn3']?.info?.jumlah_terverifikasi || 0;
+                let latestUpdate = '';
+                for (const schoolKey of Object.keys(spmbData.schools)) {
+                    totalVerified += spmbData.schools[schoolKey]?.info?.jumlah_terverifikasi || 0;
+                    const updateTime = spmbData.schools[schoolKey]?.info?.terakhir_diperbarui || '';
+                    if (updateTime && (!latestUpdate || updateTime > latestUpdate)) {
+                        latestUpdate = updateTime;
+                    }
+                }
                 document.getElementById('school-total').textContent = totalVerified;
-                
-                // Get latest update time
-                const up1 = spmbData.schools['smpn1']?.info?.terakhir_diperbarui || '';
-                const up3 = spmbData.schools['smpn3']?.info?.terakhir_diperbarui || '';
-                const lastUpdate = up1 > up3 ? up1 : (up3 || up1 || '-');
-                document.getElementById('last-update').textContent = lastUpdate;
+                document.getElementById('last-update').textContent = latestUpdate || '-';
             } else {
                 const school = spmbData.schools[currentSchool] || {};
                 const info = school.info || {};
@@ -1284,12 +1369,11 @@ def main():
             
             let applicants = [];
             if (currentSchool === 'semua') {
-                const smpn1List = spmbData.schools['smpn1']?.pathways[currentPathway] || [];
-                const smpn3List = spmbData.schools['smpn3']?.pathways[currentPathway] || [];
-                applicants = [
-                    ...smpn1List.map(app => ({ ...app, schoolKey: 'smpn1' })),
-                    ...smpn3List.map(app => ({ ...app, schoolKey: 'smpn3' }))
-                ];
+                applicants = [];
+                for (const schoolKey of Object.keys(spmbData.schools)) {
+                    const list = spmbData.schools[schoolKey]?.pathways[currentPathway] || [];
+                    applicants.push(...list.map(app => ({ ...app, schoolKey })));
+                }
             } else {
                 const schoolData = spmbData.schools[currentSchool] || {};
                 const list = schoolData.pathways[currentPathway] || [];
@@ -1401,13 +1485,18 @@ def main():
         }
 
         function getQuotaLimit() {
-            if (currentPathway === 'domisili') return 130;
-            if (currentPathway === 'afirmasi') return 81;
-            if (currentPathway === 'mutasi') return 16;
+            if (currentSchool === 'semua') return 0;
+            const quotas = schoolQuotas[currentSchool];
+            if (!quotas) return 0;
+
+            if (currentPathway === 'domisili') return quotas.domisili;
+            if (currentPathway === 'afirmasi') return quotas.afirmasi;
+            if (currentPathway === 'mutasi') return quotas.mutasi;
             if (currentPathway === 'prestasi') {
-                if (currentSubPathway === 'rapor') return 48;
-                if (currentSubPathway === 'akademik') return 49;
-                if (currentSubPathway === 'semua') return 97;
+                const totalPrestasi = quotas.prestasi;
+                if (currentSubPathway === 'rapor') return Math.floor(totalPrestasi / 2);
+                if (currentSubPathway === 'akademik') return Math.ceil(totalPrestasi / 2);
+                if (currentSubPathway === 'semua') return totalPrestasi;
             }
             return 0;
         }
@@ -1479,9 +1568,7 @@ def main():
                     ? `<span class="status-pill pill-safe">Aman</span>` 
                     : `<span class="status-pill pill-out">Gugur</span>`;
 
-                const schoolTag = app.schoolKey === 'smpn1' 
-                    ? '<span class="school-tag tag-smpn1">SMPN 1</span>' 
-                    : '<span class="school-tag tag-smpn3">SMPN 3</span>';
+                const schoolTag = getSchoolTag(app.schoolKey);
 
                 tr.innerHTML = `
                     <td>${rankCell}</td>
@@ -1761,7 +1848,8 @@ def main():
                 };
 
                 if (currentSchool === 'semua' || app.schoolKey) {
-                    item['Sekolah Tujuan'] = app.schoolKey === 'smpn1' ? 'SMPN 1 Bogor' : 'SMPN 3 Bogor';
+                    const schName = spmbData.schools[app.schoolKey]?.info?.nama_satuan_pendidikan || app.schoolKey.toUpperCase();
+                    item['Sekolah Tujuan'] = schName.replace('SMP NEGERI', 'SMPN').replace('SEKOLAH MENENGAH PERTAMA NEGERI', 'SMPN').replace(/BOGOR|KOTA BOGOR/gi, '').trim();
                 }
 
                 item['Status'] = app.isSafe !== false ? 'Aman' : 'Gugur';
@@ -1796,7 +1884,12 @@ def main():
             const wb = XLSX.utils.book_new();
             
             if (currentSchool === 'semua') {
-                for (const schoolKey of ['smpn1', 'smpn3']) {
+                const schoolKeys = Object.keys(spmbData.schools).sort((a, b) => {
+                    const numA = parseInt(a.replace(/\D/g, '')) || 0;
+                    const numB = parseInt(b.replace(/\D/g, '')) || 0;
+                    return numA - numB;
+                });
+                for (const schoolKey of schoolKeys) {
                     const schoolData = spmbData.schools[schoolKey] || {};
                     const pathways = schoolData.pathways || {};
                     const prefix = schoolKey.toUpperCase() + '_';
