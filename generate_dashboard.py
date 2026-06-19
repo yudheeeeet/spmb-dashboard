@@ -791,8 +791,8 @@ def main():
         <div class="header-title">
             <div class="header-logo">SPMB</div>
             <div class="header-info">
-                <h1 id="school-name">Memuat Data Sekolah...</h1>
-                <p id="school-update">Sistem Penerimaan Murid Baru (SPMB) 2026</p>
+                <h1>Sistem Monitoring</h1>
+                <p>Seleksi Penerimaan Murid Baru (SPMB) SMP Kota Bogor 2026</p>
             </div>
         </div>
         <div class="header-badges">
@@ -1216,7 +1216,7 @@ def main():
             if (!spmbData || !spmbData.schools) return;
 
             if (currentSchool === 'semua') {
-                document.getElementById('school-name').textContent = 'Semua Sekolah (SMP Negeri Kota Bogor)';
+                // Header title is static "Sistem Monitoring"
                 document.getElementById('school-npsn').textContent = 'Multi-NPSN';
                 
                 // Sum verified applicants
@@ -1234,7 +1234,7 @@ def main():
             } else {
                 const school = spmbData.schools[currentSchool] || {};
                 const info = school.info || {};
-                document.getElementById('school-name').textContent = info.nama_satuan_pendidikan || 'Memuat Sekolah...';
+                // Header title is static "Sistem Monitoring"
                 document.getElementById('school-npsn').textContent = info.npsn || '-';
                 document.getElementById('school-total').textContent = info.jumlah_terverifikasi || '-';
                 document.getElementById('last-update').textContent = info.terakhir_diperbarui || '-';
