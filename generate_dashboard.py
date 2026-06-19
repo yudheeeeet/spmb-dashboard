@@ -198,12 +198,26 @@ def main():
         }
 
         /* Mode & Controls */
+        .navigation-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
         .controls-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .action-buttons-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.25rem;
         }
 
         .theme-toggle {
@@ -824,8 +838,8 @@ def main():
     </div>
 
     <!-- Main Navigation controls (School switcher) -->
-    <div class="controls-row">
-        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <div class="navigation-section">
+        <div class="controls-row">
             <button class="theme-toggle" id="theme-toggle" title="Toggle Light/Dark Mode">🌙</button>
             
             <!-- School Selection Dropdown Selector -->
@@ -851,7 +865,7 @@ def main():
             </div>
         </div>
 
-        <div class="action-buttons">
+        <div class="action-buttons-row">
             <button class="btn btn-outline" onclick="exportCurrentToExcel()">📊 Export View Saat Ini</button>
             <button class="btn btn-primary" onclick="exportSchoolToExcel()">📥 Export Sekolah Aktif</button>
         </div>
