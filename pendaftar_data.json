@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-06-19T08:30:48.237603",
+  "last_updated": "2026-06-19T01:39:26.906356",
   "schools": {
     "smpn1": {
       "info": {
         "id": "6058e604-2df5-e011-91f0-e9feaa2e9d74",
         "nama_satuan_pendidikan": "SMP NEGERI 1 BOGOR",
         "npsn": "20220385",
-        "jumlah_terverifikasi": 357,
-        "terakhir_diperbarui": "19 Juni 2026 pukul 08.27 WIB"
+        "jumlah_terverifikasi": 358,
+        "terakhir_diperbarui": "19 Juni 2026 pukul 08.37 WIB"
       },
       "pathways": {
         "afirmasi": [
@@ -1015,6 +1015,29 @@
             "keterangan": "-",
             "jarak": "1103.44",
             "jarak_pilihan": "1103.44",
+            "satuan_pendidikan_pilihan_1": "-",
+            "jarak_1": "-",
+            "satuan_pendidikan_pilihan_2": "-",
+            "jarak_2": "-",
+            "satuan_pendidikan_pilihan_3": "-",
+            "jarak_3": "-",
+            "skor_akhir": "-"
+          },
+          {
+            "no_pendaftaran": "20220385010100045",
+            "nama_murid": "D****n O*****n D**a P****a",
+            "asal_satuan_pendidikan": "SD NEGERI POLISI 1",
+            "jalur": "Afirmasi",
+            "sub_jalur": "Afirmasi",
+            "nilai_rapor": "-",
+            "status_domisili": "Dalam Kota",
+            "jumlah_sertifikat": 0,
+            "skor_sertifikat": 0,
+            "subJalur": "Afirmasi",
+            "desil": "1",
+            "keterangan": "-",
+            "jarak": "885.55",
+            "jarak_pilihan": "885.55",
             "satuan_pendidikan_pilihan_1": "-",
             "jarak_1": "-",
             "satuan_pendidikan_pilihan_2": "-",
@@ -8236,8 +8259,8 @@
         "id": "e0000704-2df5-e011-842f-5d02e391b0b3",
         "nama_satuan_pendidikan": "SMP NEGERI 3 BOGOR",
         "npsn": "20220377",
-        "jumlah_terverifikasi": 444,
-        "terakhir_diperbarui": "19 Juni 2026 pukul 08.25 WIB"
+        "jumlah_terverifikasi": 446,
+        "terakhir_diperbarui": "19 Juni 2026 pukul 08.35 WIB"
       },
       "pathways": {
         "afirmasi": [
@@ -15923,6 +15946,29 @@
             "jarak_2": "1308.47",
             "satuan_pendidikan_pilihan_3": "SMP PGRI 5",
             "jarak_3": "2192.46",
+            "skor_akhir": "-"
+          },
+          {
+            "no_pendaftaran": "20220377040000247",
+            "nama_murid": "K***A P***I",
+            "asal_satuan_pendidikan": "SD NEGERI BOJONGJENGKOL 02",
+            "jalur": "Domisili",
+            "sub_jalur": "Wilayah 2",
+            "nilai_rapor": "-",
+            "status_domisili": "Dalam Kota",
+            "jumlah_sertifikat": 0,
+            "skor_sertifikat": 0,
+            "subJalur": "Wilayah 2",
+            "desil": "-",
+            "keterangan": "-",
+            "jarak": "302.27",
+            "jarak_pilihan": "302.27",
+            "satuan_pendidikan_pilihan_1": "SMP NEGERI 3 BOGOR",
+            "jarak_1": "302.27",
+            "satuan_pendidikan_pilihan_2": "SMP NEGERI 11 BOGOR",
+            "jarak_2": "1124.29",
+            "satuan_pendidikan_pilihan_3": "-",
+            "jarak_3": "-",
             "skor_akhir": "-"
           }
         ],
