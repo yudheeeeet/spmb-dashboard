@@ -2,7 +2,7 @@ name: Daily SPMB Data Scraper
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at 00:00 UTC (07:00 WIB)
+    - cron: '0 * * * *' # Runs every hour
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
 
 permissions:
@@ -33,5 +33,6 @@ jobs:
           echo "No changes in data. Skipping commit."
         else
           git commit -m "chore: auto-update spmb pendaftar data [cron]"
-          git push
+          git pull --rebase origin main
+          git push origin main
         fi
