@@ -251,15 +251,19 @@ def main():
             box-shadow: var(--shadow);
         }
 
+        #residency-tabs {
+            margin-left: auto; /* Push residency tabs to the far right */
+        }
+
         .tab-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 0.7rem 1.5rem;
+            padding: 0.55rem 1.1rem; /* Compact padding */
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* Compact font size */
             transition: all 0.2s ease;
         }
 
@@ -648,6 +652,9 @@ def main():
                 flex-direction: column;
                 align-items: stretch;
             }
+            #residency-tabs {
+                margin-left: 0;
+            }
             .tabs {
                 flex-direction: column;
             }
@@ -763,6 +770,10 @@ def main():
             background-position: right 8px center;
             background-size: 20px;
             transition: all 0.2s ease;
+            max-width: 280px; /* Constrain max width */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .school-dropdown:hover, .school-dropdown:focus {
