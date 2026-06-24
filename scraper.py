@@ -8,7 +8,7 @@ from datetime import datetime
 
 def fetch_pathway_data(school_id, jalur):
     base_url = f'https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/{school_id}'
-    url = f'{base_url}?filter=semua&jalur={jalur}&limit=300&page=1'
+    url = f'{base_url}?filter=semua&jalur={jalur}&limit=1500&page=1'
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
         with urllib.request.urlopen(req) as response:
@@ -77,7 +77,7 @@ def fetch_schools():
 
 def fetch_pathway_data(school_id, jalur):
     base_url = f'https://spmb.kotabogor.go.id/jenjang-smp/data-spmb/data-pendaftar/detail/{school_id}'
-    url = f'{base_url}?filter=semua&jalur={jalur}&limit=300&page=1'
+    url = f'{base_url}?filter=semua&jalur={jalur}&limit=1500&page=1'
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
         with urllib.request.urlopen(req) as response:
