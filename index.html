@@ -1678,12 +1678,11 @@
 
             let applicants = [];
             if (currentSchool === 'semua') {
-                const smpn1List = spmbData.schools['smpn1']?.pathways[currentPathway] || [];
-                const smpn3List = spmbData.schools['smpn3']?.pathways[currentPathway] || [];
-                applicants = [
-                    ...smpn1List.map(app => ({ ...app, schoolKey: 'smpn1' })),
-                    ...smpn3List.map(app => ({ ...app, schoolKey: 'smpn3' }))
-                ];
+                applicants = [];
+                for (const schoolKey of Object.keys(spmbData.schools)) {
+                    const list = spmbData.schools[schoolKey]?.pathways[currentPathway] || [];
+                    applicants.push(...list.map(app => ({ ...app, schoolKey })));
+                }
             } else {
                 const schoolData = spmbData.schools[currentSchool] || {};
                 applicants = schoolData.pathways[currentPathway] || [];

@@ -90,6 +90,26 @@ def fetch_pathway_data(school_id, jalur):
         print(f'Error fetching {school_id} - {jalur}: {e}')
     return None
 
+def prune_applicant_data(applicants):
+    allowed_keys = {
+        'no_pendaftaran',
+        'nama_murid',
+        'asal_satuan_pendidikan',
+        'sub_jalur',
+        'nilai_rapor',
+        'skor_sertifikat',
+        'jarak',
+        'status_domisili',
+        'skor_akhir'
+    }
+    pruned = []
+    for app in applicants:
+        pruned_app = {k: app[k] for k in allowed_keys if k in app}
+        if 'sub_jalur' not in pruned_app and 'subJalur' in app:
+            pruned_app['sub_jalur'] = app['subJalur']
+        pruned.append(pruned_app)
+    return pruned
+
 def main():
     schools_config = fetch_schools()
     if not schools_config:
@@ -125,7 +145,8 @@ def main():
             print(f'  Fetching pathway: {jalur}...')
             props = fetch_pathway_data(school_id, jalur)
             if props:
-                school_entry['pathways'][jalur] = props.get('data', [])
+                raw_apps = props.get('data', [])
+                school_entry['pathways'][jalur] = prune_applicant_data(raw_apps)
                 if not school_info_fetched:
                     school_info = props.get('satuanPendidikan', {})
                     if school_info:
