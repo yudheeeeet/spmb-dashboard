@@ -150,6 +150,147 @@
             color: var(--primary);
         }
 
+        /* Author Dropdown Container */
+        .author-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .author-dropdown-btn {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-family: inherit;
+        }
+
+        .author-dropdown-btn:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);
+        }
+
+        .author-dropdown-btn:active {
+            transform: translateY(0);
+        }
+
+        .dropdown-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .author-dropdown-container.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .author-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            width: 320px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 1.2rem;
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .dark .author-dropdown-content {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .light .author-dropdown-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .author-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .author-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .author-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.35;
+        }
+
+        .author-bullet {
+            font-size: 1rem;
+            line-height: 1.35;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .author-divider {
+            height: 1px;
+            background: var(--card-border);
+            margin: 0.8rem 0;
+        }
+
+        .author-affiliation {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .aff-icon {
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+        }
+
+        .aff-text strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
         /* CORS fallback alert */
         .cors-alert {
             background: var(--alert-bg);
@@ -826,6 +967,34 @@
             <div class="badge">
                 <span>Update Data:</span> <span id="last-update">-</span>
             </div>
+            
+            <!-- Tentang Kami Dropdown -->
+            <div class="author-dropdown-container">
+                <button class="author-dropdown-btn" id="about-us-btn">
+                    <span>Tentang Kami</span> <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="author-dropdown-content" id="about-us-dropdown">
+                    <div class="author-title">Pengembang Dashboard</div>
+                    <div class="author-list">
+                        <div class="author-item">
+                            <span class="author-bullet">👤</span>
+                            <span class="author-name">Sachnaz Desta Oktarina S.Stat., M.Agr.Sc., Ph.D</span>
+                        </div>
+                        <div class="author-item">
+                            <span class="author-bullet">👤</span>
+                            <span class="author-name">Rachmat Bintang Yudhianto S.Kom., M.Si.</span>
+                        </div>
+                    </div>
+                    <div class="author-divider"></div>
+                    <div class="author-affiliation">
+                        <span class="aff-icon">🏫</span>
+                        <div class="aff-text">
+                            <strong>Sekolah Sains Data, Matematika, dan Informatika</strong><br>
+                            IPB University
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1079,6 +1248,31 @@
                 dropZone.style.background = 'rgba(99, 102, 241, 0.05)';
                 if (e.dataTransfer.files.length > 0) {
                     handleUploadedFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            // Author Dropdown Toggle
+            const aboutUsBtn = document.getElementById('about-us-btn');
+            const aboutUsDropdown = document.getElementById('about-us-dropdown');
+            const dropdownContainer = document.querySelector('.author-dropdown-container');
+
+            aboutUsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isActive = dropdownContainer.classList.contains('active');
+                if (isActive) {
+                    dropdownContainer.classList.remove('active');
+                    aboutUsDropdown.style.display = 'none';
+                } else {
+                    dropdownContainer.classList.add('active');
+                    aboutUsDropdown.style.display = 'block';
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!dropdownContainer.contains(e.target)) {
+                    dropdownContainer.classList.remove('active');
+                    aboutUsDropdown.style.display = 'none';
                 }
             });
         });
