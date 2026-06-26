@@ -86,7 +86,6 @@ def main():
             flex-wrap: wrap;
             gap: 1.5rem;
             position: relative;
-            overflow: hidden;
         }
 
         header::before {
@@ -97,6 +96,8 @@ def main():
             width: 100%;
             height: 4px;
             background: var(--gradient);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
         }
 
         .header-title {
