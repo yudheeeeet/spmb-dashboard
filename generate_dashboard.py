@@ -980,6 +980,9 @@ def main():
             <div class="badge">
                 <span>Update Data:</span> <span id="last-update">-</span>
             </div>
+            <div class="badge" title="Jumlah total kunjungan ke dashboard ini">
+                <span>👁️ Pengunjung:</span> <strong id="visitor-count">...</strong>
+            </div>
             
             <!-- Tentang Kami Dropdown -->
             <div class="author-dropdown-container">
@@ -1054,10 +1057,12 @@ def main():
             </div>
         </div>
 
+        <!--
         <div class="action-buttons-row">
             <button class="btn btn-outline" disabled onclick="exportCurrentToExcel()">📊 Export View Saat Ini (Nonaktif)</button>
             <button class="btn btn-primary" disabled onclick="exportSchoolToExcel()">📥 Export Sekolah Aktif (Nonaktif)</button>
         </div>
+        -->
     </div>
 
     <!-- Sub-pathways Menu specifically for Prestasi -->
@@ -1288,6 +1293,24 @@ def main():
                     aboutUsDropdown.style.display = 'none';
                 }
             });
+
+            // Visitor Counter
+            const visitorCountEl = document.getElementById('visitor-count');
+            if (visitorCountEl) {
+                fetch('https://abacus.jasoncameron.dev/hit/yudheeeeet/spmb-dashboard')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && typeof data.value === 'number') {
+                            visitorCountEl.textContent = data.value.toLocaleString();
+                        } else {
+                            visitorCountEl.textContent = '-';
+                        }
+                    })
+                    .catch(err => {
+                        console.warn('Gagal memuat jumlah pengunjung:', err);
+                        visitorCountEl.textContent = '-';
+                    });
+            }
         });
 
         // Compute official rank and safe status for all pathways
