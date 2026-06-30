@@ -471,6 +471,14 @@
             transform: translateY(-1px);
         }
 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+            border-color: var(--card-border) !important;
+        }
+
         /* Statistics Section - 5 Serangkai */
         .stats-grid {
             display: grid;
@@ -1043,8 +1051,8 @@
         </div>
 
         <div class="action-buttons-row">
-            <button class="btn btn-outline" onclick="exportCurrentToExcel()">📊 Export View Saat Ini</button>
-            <button class="btn btn-primary" onclick="exportSchoolToExcel()">📥 Export Sekolah Aktif</button>
+            <button class="btn btn-outline" disabled onclick="exportCurrentToExcel()">📊 Export View Saat Ini (Nonaktif)</button>
+            <button class="btn btn-primary" disabled onclick="exportSchoolToExcel()">📥 Export Sekolah Aktif (Nonaktif)</button>
         </div>
     </div>
 
@@ -2074,6 +2082,8 @@
         }
 
         function exportCurrentToExcel() {
+            alert('Fitur ekspor dinonaktifkan sementara demi etika penggunaan data dashboard.');
+            return;
             if (filteredApplicants.length === 0) {
                 alert('Tidak ada data untuk diexport.');
                 return;
@@ -2095,6 +2105,8 @@
         }
 
         function exportSchoolToExcel() {
+            alert('Fitur ekspor dinonaktifkan sementara demi etika penggunaan data dashboard.');
+            return;
             if (!spmbData) return;
             const wb = XLSX.utils.book_new();
             
