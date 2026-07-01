@@ -980,9 +980,11 @@ def main():
             <div class="badge">
                 <span>Update Data:</span> <span id="last-update">-</span>
             </div>
+            <!--
             <div class="badge" title="Jumlah total kunjungan ke dashboard ini">
                 <span>👁️ Pengunjung:</span> <strong id="visitor-count">...</strong>
             </div>
+            -->
             
             <!-- Tentang Kami Dropdown -->
             <div class="author-dropdown-container">
@@ -1294,6 +1296,7 @@ def main():
                 }
             });
 
+            /*
             // Visitor Counter
             const visitorCountEl = document.getElementById('visitor-count');
             if (visitorCountEl) {
@@ -1311,6 +1314,7 @@ def main():
                         visitorCountEl.textContent = '-';
                     });
             }
+            */
         });
 
         // Compute official rank and safe status for all pathways
